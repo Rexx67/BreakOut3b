@@ -40,21 +40,25 @@
             }
         }
         
-        // Set the paddel rect by using the size of the paddel image
+        // Set Paddel Rect to the size of the Paddel image
         UIImage* paddelImage = [UIImage imageNamed:@"paddel.png"];
         CGSize paddelSize = [paddelImage size];
         _paddelRect = CGRectMake(0.0, 420.0,
                                 paddelSize.width, paddelSize.height);
         
-        // Set the mo rect by using the size of the mo image
+        BOMovingObject *bomo = [[BOMovingObject alloc] initAtPosition:CGPointMake(MO_POS_X, MO_POS_Y)];
+    
+        // Get the initial velocity vector for the Moving Object
+        moVelocity = bomo.velocity;
+
+        // Set Moving Object Rect to the size of the Moving Object image
         UIImage* moImage = [UIImage imageNamed:@"mo.png"];
         CGSize moSize = [moImage size];
-        _moSquare = CGRectMake(180.0, 220.0,
-                              moSize.width, moSize.height);
+        _moSquare = CGRectMake(bomo.position.x,
+                               bomo.position.y,
+                               moSize.width, moSize.height);
         
-        // Set the initial velocity for the mo
-        moVelocity = CGPointMake(200.0, -200.0);
-        
+               
         // Initialize the lastTime
         lastTime = 0.0;
         

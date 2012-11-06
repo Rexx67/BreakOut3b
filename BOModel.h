@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BOMovingObject.h"
 #import "BOBlockView.h"
+
 #define BLOCK_HEIGHT 20.0
 #define BLOCK_WIDTH  53.3
-#define MO_SIZE 10.0
 #define VIEW_WIDTH 320.0
 #define VIEW_HEIGHT 460.0
 #define MARGIN 0.05
