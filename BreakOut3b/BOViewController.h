@@ -8,6 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BOViewController : UIViewController
+#import <QuartzCore/QuartzCore.h>
+#import "BOBlockView.h"
+#import "BOModel.h"
+
+@interface BOViewController : UIViewController {
+    BOModel* gameModel;
+    CADisplayLink* gameTimer;
+    UIImageView* mo;
+    UIImageView* paddel;
+}
+
+-(void) updateDisplay:(CADisplayLink*)sender ;
+-(void) endGameWithMessage:(NSString*) message;
 
 @end
