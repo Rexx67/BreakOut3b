@@ -66,7 +66,7 @@
     
     return self;
 }
-
+/*
 - (void) checkCollisionWithScreenEdges {
     // Change mo direction if it hit an edge of the screen
     // Left edge
@@ -110,6 +110,7 @@
     }
     
 }
+*/
 
 - (void) checkCollisionWithBlocks {
     // Iterate over the blocks to see if a collision has happened
@@ -168,8 +169,14 @@
         _moSquare.origin.y += moVelocity.y * timeDiff;
         
         // Check for collision with screen edges
-        [self checkCollisionWithScreenEdges];
-        
+        //_[self checkCollisionWithScreenEdges];
+        // Handle collision with bounds by resetting direction if needed
+        while([self changeDirectionForBounds])
+        {
+            // Calculate new position  based on updated velocity vector
+            _moSquare.origin.x += moVelocity.x * timeDiff;
+            _moSquare.origin.y += moVelocity.y * timeDiff;
+        }
         
         // Do collision detection with blocks
         [self checkCollisionWithBlocks];
@@ -181,6 +188,82 @@
     
 }
 
+- (BOOL) changeDirectionForBounds{
+    
+    // Change ball direction if it hit an edge of the screen
+
+    BOOL hitBounds = NO;
+    if ([self hitLeft])
+    {
+        moVelocity.x = abs(moVelocity.x);
+        hitBounds = YES;
+    }
+    
+    if ([self hitRight])
+    {
+        moVelocity.x = -1 * abs(moVelocity.x);
+        hitBounds = YES;
+    }
+    
+    if ([self hitTop])
+    {
+        moVelocity.y = abs(moVelocity.y);
+        hitBounds = YES;
+    }
+    
+    if ([self hitBottom])
+    {
+        // [Just let the mo bounce back!]
+        // mo went off the bottom of the screen
+        // In a production game, you'd want to reduce the player's
+        // mo count by one and reset the mo.  To keep this example
+        // simple, we are not keeping score or mo count. We'll
+        // just reset the mo
+        
+        //_ moSquare.origin.x = 180.0;
+        //_ moSquare.origin.y = 220.0;
+
+        moVelocity.y = -1*abs(moVelocity.y);
+        hitBounds = YES;
+    }
+    return hitBounds;
+}
+
+- (BOOL) hitLeft {
+	if (_moSquare.origin.x <= 0)
+    {
+	    NSLog(@"hitLeft");
+        return YES;
+    }
+    else return NO;
+}
+
+- (BOOL) hitRight {
+    if (_moSquare.origin.x >= VIEW_WIDTH - MO_SIZE)
+    {
+        NSLog(@"hitRight");
+        return YES;
+    }
+    else return NO;
+}
+
+- (BOOL) hitTop {
+    if (_moSquare.origin.y <=  0)
+    {
+        NSLog(@"hitTop");
+        return YES;
+    }
+    else return NO;
+}
+
+- (BOOL) hitBottom {
+    if (_moSquare.origin.y >=  VIEW_HEIGHT - MO_SIZE)
+    {
+        NSLog(@"hitBottom");
+        return YES;
+    }
+    else return NO;
+}
 
 @end
 

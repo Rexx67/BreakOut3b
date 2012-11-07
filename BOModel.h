@@ -32,7 +32,7 @@
 @property CGRect paddelRect;
 
 - (void) updateModelWithTime:(CFTimeInterval) timestamp;
-- (void) checkCollisionWithScreenEdges;
+//- (void) checkCollisionWithScreenEdges;
 - (void) checkCollisionWithBlocks;
 - (void) checkCollisionWithPaddel;
 
