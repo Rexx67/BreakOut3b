@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 
 
 #define BLUE_COLOR 0
@@ -17,14 +18,17 @@
 #define MAGENTA_COLOR 5
 
 
+
 @interface BOBlockView : UIView {
     
     int color;
+    CALayer *blockLayer;
 }
 
 - (id)initWithFrame:(CGRect)frame color:(int) inputColor;
 
 @property int color;
+@property CALayer *blockLayer;
 
 @end
 

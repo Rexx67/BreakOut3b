@@ -12,6 +12,10 @@
 
 #define BLOCK_HEIGHT 20.0
 #define BLOCK_WIDTH  53.3
+#define THICKNESS 2
+#define PADDEL_EDGE 0.333
+#define ACCEL 0.2           // Every hit on the paddel contributes to a speed change by this relative amount
+#define MIN_CHANGE 15       // To ensure that we have a finite speed
 #define VIEW_WIDTH 320.0
 #define VIEW_HEIGHT 460.0
 #define MARGIN 0.05
@@ -32,8 +36,8 @@
 @property CGRect paddelRect;
 
 - (void) updateModelWithTime:(CFTimeInterval) timestamp;
-//- (void) checkCollisionWithScreenEdges;
 - (void) checkCollisionWithBlocks;
 - (void) checkCollisionWithPaddel;
+
 
 @end

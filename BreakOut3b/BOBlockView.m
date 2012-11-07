@@ -11,6 +11,7 @@
 @implementation BOBlockView
 
 @synthesize color = _color;
+@synthesize blockLayer;
 
 - (id)initWithFrame:(CGRect)frame color:(int) inputColor;
 {
@@ -18,6 +19,34 @@
     if (self) {
         // Initialization code
         self.color = inputColor;
+        
+        
+    /*    NSLog(@"Frame x=%f, y=%f, width=%f, height=%f",
+              self.frame.origin.x,
+              self.frame.origin.y,
+              self.frame.size.width,
+              self.frame.size.height); */
+        
+        // Create new Layer object
+        blockLayer = [[CALayer alloc] init];
+        
+        // Give it a size
+        [blockLayer setBounds:CGRectMake(0, 0, self.frame.size.width,self.frame.size.height)];
+        
+        // Give it a position
+        [blockLayer setPosition:CGPointMake(0.5*self.frame.size.width,
+                                            0.5*self.frame.size.height)];
+        
+        // Make a color
+        UIColor *transparent = [UIColor colorWithRed:0.0 green: 0.0 blue: 0.0 alpha: 0.0];
+        
+        // Get a CGColor objectwith the same color value
+        CGColorRef cgTransparent = [transparent CGColor];
+        [blockLayer setBackgroundColor:cgTransparent];
+        
+        // Make it a subview of the view's layer
+        [[self layer] addSublayer:blockLayer];
+        
     }
     return self;
 }
