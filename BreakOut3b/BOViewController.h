@@ -19,7 +19,7 @@
     UIImageView* paddel;
 }
 
--(void) updateDisplay:(CADisplayLink*)sender ;
--(void) endGameWithMessage:(NSString*) message;
+-(void) gameLoop:(CADisplayLink*)sender ;
+-(void) gameOver:(NSString*) message;
 
 @end

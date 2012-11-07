@@ -23,8 +23,8 @@
     CGRect paddelRect;
     CGRect moSquare;
     CGPoint moVelocity;
-    CGFloat lastTime;
-    CGFloat timeDelta;
+    CGFloat timeOld;
+    CGFloat timeDiff;
 }
 
 @property (readonly) NSMutableArray* blocks;

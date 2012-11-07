@@ -48,7 +48,7 @@
     
     // Set up the CADisplayLink for the animation
     gameTimer = [CADisplayLink displayLinkWithTarget:self
-                                            selector:@selector(updateDisplay:)];
+                                            selector:@selector(gameLoop:)];
     
     
     // Add the display link to the current run loop
@@ -58,7 +58,7 @@
     
 }
 
--(void) updateDisplay:(CADisplayLink*)sender
+-(void) gameLoop:(CADisplayLink*)sender
 {
     // This method is called by the gameTimer each time the display should
     // update
@@ -74,13 +74,13 @@
     {
         // No more blocks, end the game
         // [The model should return a score and update the top ten list]
-        [self endGameWithMessage:@"You destroyed all of the blocks"];
+        [self gameOver:@"The End is Near"];
         
     }
     
     
 }
--(void) endGameWithMessage:(NSString*) message
+-(void) gameOver:(NSString *)message
 {
     // Call this method to end the game
     // Invalidate the timer

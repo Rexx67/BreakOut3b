@@ -71,8 +71,8 @@
 		5F6DC8181649A720004B713C /* BOBlockView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BOBlockView.m; sourceTree = "<group>"; };
 		5F6DC81A1649A83E004B713C /* BOModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BOModel.h; path = ../BOModel.h; sourceTree = "<group>"; };
 		5F6DC81B1649A83E004B713C /* BOModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BOModel.m; path = ../BOModel.m; sourceTree = "<group>"; };
-		5F6DC8261649B3BC004B713C /* mo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mo.png; sourceTree = "<group>"; };
-		5F6DC8281649B3D2004B713C /* paddel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paddel.png; sourceTree = "<group>"; };
+		5F6DC8261649B3BC004B713C /* mo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mo.png; path = ../mo.png; sourceTree = "<group>"; };
+		5F6DC8281649B3D2004B713C /* paddel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = paddel.png; path = ../paddel.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,11 +100,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5F6DC7CB1649A5B5004B713C = {
+		5F59A15E164A391800963865 /* Images */ = {
 			isa = PBXGroup;
 			children = (
 				5F6DC8281649B3D2004B713C /* paddel.png */,
 				5F6DC8261649B3BC004B713C /* mo.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		5F6DC7CB1649A5B5004B713C = {
+			isa = PBXGroup;
+			children = (
 				5F6DC8151649A5D6004B713C /* QuartzCore.framework */,
 				5F6DC7E01649A5B5004B713C /* BreakOut3b */,
 				5F6DC8041649A5B5004B713C /* BreakOut3bTests */,
@@ -136,6 +143,7 @@
 		5F6DC7E01649A5B5004B713C /* BreakOut3b */ = {
 			isa = PBXGroup;
 			children = (
+				5F59A15E164A391800963865 /* Images */,
 				5F6DC81D1649A8AA004B713C /* Model */,
 				5F6DC7E91649A5B5004B713C /* BOAppDelegate.h */,
 				5F6DC7EA1649A5B5004B713C /* BOAppDelegate.m */,

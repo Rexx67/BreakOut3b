@@ -60,7 +60,7 @@
         
                
         // Initialize the lastTime
-        lastTime = 0.0;
+        timeOld = 0.0;
         
     }
     
@@ -150,23 +150,22 @@
     }
 }
 
--(void) updateModelWithTime:(CFTimeInterval) timestamp{
-    if (lastTime == 0.0)
+-(void) updateModelWithTime:(CFTimeInterval) timeNew {
+    if (timeOld == 0.0)
     {
-        // First time through, initialize the lastTime
-        lastTime = timestamp;
+        // First time through, initialize timeOld
+        timeOld  = timeNew;
     }
     else
     {
-        // Calculate time elapsed since last call
-        timeDelta = timestamp - lastTime;
+        timeDiff = timeNew - timeOld;
         
-        // Update the lastTime
-        lastTime = timestamp;
+        // Remember the new time for next pass
+        timeOld = timeNew;
         
         // Calculate new position of the mo
-        _moSquare.origin.x += moVelocity.x * timeDelta;
-        _moSquare.origin.y += moVelocity.y * timeDelta;
+        _moSquare.origin.x += moVelocity.x * timeDiff;
+        _moSquare.origin.y += moVelocity.y * timeDiff;
         
         // Check for collision with screen edges
         [self checkCollisionWithScreenEdges];
