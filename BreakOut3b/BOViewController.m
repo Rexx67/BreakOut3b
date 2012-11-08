@@ -73,8 +73,12 @@
     if ([gameModel.blocks count] == 0)
     {
         // No more blocks, end the game
+        // Remove the last blocks from view
+        [gameModel clearScreen];
         // [The model should return a score and update the top ten list]
-        [self gameOver:@"The End is Near"];
+        int netScore = (int)0.5+gameModel.score/gameModel.timeElapsed;
+        NSString *scoreString =[NSString stringWithFormat:@"Score = %d", netScore];
+        [self gameOver:scoreString];
         
     }
     

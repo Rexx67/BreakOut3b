@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #define MO_SIZE 10
-#define MO_SPEED 200
+#define MO_SPEED 400
 #define MO_X 180.0
 #define MO_Y 220.0
 #define MO_POS_X 180.0

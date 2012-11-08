@@ -8,15 +8,24 @@
 
 #import "BOModel.h"
 
-@interface BOModel ()
-    -(BOOL)flipY:(CGRect) obstruction;
+@interface BOModel (){
+    NSMutableArray* blocksToRemoveFromView;
+   
+}
+
+-(BOOL)flipY:(CGRect) obstruction;
+
+@property (nonatomic) NSMutableArray* blocksToRemoveFromView;
 @end
 
 @implementation BOModel
 
+@synthesize blocksToRemoveFromView = _blocksToRemoveFromView;
+@synthesize score = _score;
 @synthesize blocks = _blocks;
 @synthesize moSquare = _moSquare;
 @synthesize paddelRect = _paddelRect;
+@synthesize timeElapsed;
 
 - (id)init {
     self = [super init];
@@ -24,7 +33,8 @@
     if (self) {
         // Init blocks
         // The array to hold the blocks
-        _blocks = [[NSMutableArray alloc] initWithCapacity:30];
+        _blocks = [[NSMutableArray alloc] initWithCapacity:50];
+        _blocksToRemoveFromView = [[NSMutableArray alloc] initWithCapacity:50];
         
         BOBlockView* bobv;
         
@@ -47,7 +57,7 @@
         // Set Paddel Rect to the size of the Paddel image
         UIImage* paddelImage = [UIImage imageNamed:@"paddel.png"];
         CGSize paddelSize = [paddelImage size];
-        _paddelRect = CGRectMake(0.0, 420.0,
+        _paddelRect = CGRectMake(0.0, VIEW_HEIGHT - 40,
                                 paddelSize.width, paddelSize.height);
         
         BOMovingObject *bomo = [[BOMovingObject alloc] initAtPosition:CGPointMake(MO_POS_X, MO_POS_Y)];
@@ -66,6 +76,10 @@
         // Initialize the lastTime
         timeOld = 0.0;
         
+        // Initilaize score
+        _score = 0;
+        
+        
     }
     
     return self;
@@ -74,8 +88,9 @@
 -(void) updateModelWithTime:(CFTimeInterval) timeNew {
     if (timeOld == 0.0)
     {
-        // First time through, initialize timeOld
+        // First time through, initialize timeOld and timeStart
         timeOld  = timeNew;
+        timeStart = timeNew;
     }
     else
     {
@@ -83,6 +98,8 @@
         
         // Remember the new time for next pass
         timeOld = timeNew;
+        // Compute new elapsed time
+        timeElapsed = timeNew - timeStart;
         
         // Calculate new position of the mo
         _moSquare.origin.x += moVelocity.x * timeDiff;
@@ -197,10 +214,6 @@
                 // Flip the x velocity component if we hit eft or right
                 moVelocity.y = -1 * moVelocity.x;
             }
-            // [Here we should check whether it intersect with the bottom or top
-            // of a block.  If not, we should flip the x-component instead]
-            // Flip the y velocity component
-           // moVelocity.y = -moVelocity.y;
             
             // Animate the removal of the block
             
@@ -213,10 +226,20 @@
             
             [bobv.blockLayer setBackgroundColor:cgOpaque];
             
+            // Compute the new gross score
+            _score = _score + 1000 * (bobv.color + 1);
             // Remove the block from the collection
             [_blocks removeObject:bobv];
             
-            // Before we used animation this was the way to get rid of a block view
+            // After we have used animation we need to remove the objects from the view after some time
+            // Keep track of blocks to remove from view
+             [_blocksToRemoveFromView addObject:bobv];
+            
+            // If we have animated away some blocks remove the oldest one from the view
+            if([_blocksToRemoveFromView count]>5) {
+                [[_blocksToRemoveFromView objectAtIndex:0] removeFromSuperview];
+                [_blocksToRemoveFromView removeObjectAtIndex:0];
+            }
             //    [bobv removeFromSuperview];
             
             
@@ -316,6 +339,12 @@
     return;
 }
 
+- (void) clearScreen {
+    // Remove remianing blocks from view
+    for (BOBlockView* bobv in _blocksToRemoveFromView) {
+        [bobv removeFromSuperview];
+    }
+}
 
 
 @end
