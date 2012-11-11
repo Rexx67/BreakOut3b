@@ -143,19 +143,57 @@
 }
 */
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView commitEditingStyle:
+(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"commitEditingStyle:");
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
+        
+        //[self.links removeObjectAtIndex:indexPath.row];
+        NSMutableArray *su = [[NSMutableArray alloc] initWithArray:self.users];
+        [su removeObjectAtIndex:indexPath.row];
+        self.users = su;
+        
+        int noOfUsers = [[NSUserDefaults standardUserDefaults] integerForKey:@"noOfUsers"];
+        int currentPlayer = [[NSUserDefaults standardUserDefaults] integerForKey:@"currentPlayer"];
+        NSArray *oldUsers = [[NSUserDefaults standardUserDefaults] objectForKey:@"users"];
+        NSArray *oldDiffs = [[NSUserDefaults standardUserDefaults] objectForKey:@"diffs"];
+        NSArray *oldScores = [[NSUserDefaults standardUserDefaults] objectForKey:@"scores"];
+        NSArray *oldColors = [[NSUserDefaults standardUserDefaults] objectForKey:@"colors"];
+        
+        NSMutableArray *tempUsers = [[NSMutableArray alloc] initWithArray:oldUsers];
+        NSMutableArray *tempDiffs = [[NSMutableArray alloc] initWithArray:oldDiffs];
+        NSMutableArray *tempScores = [[NSMutableArray alloc] initWithArray:oldScores];
+        NSMutableArray *tempColors = [[NSMutableArray alloc] initWithArray:oldColors];
+        
+        
+        [tempUsers removeObjectAtIndex:indexPath.row];
+        [tempDiffs removeObjectAtIndex:indexPath.row];
+        [tempScores removeObjectAtIndex:indexPath.row];
+        [tempColors removeObjectAtIndex:indexPath.row];
+        
+        [[NSUserDefaults standardUserDefaults] setObject:tempUsers forKey:@"users"];
+        [[NSUserDefaults standardUserDefaults] setObject:tempDiffs forKey:@"diffs"];
+        [[NSUserDefaults standardUserDefaults] setObject:tempScores forKey:@"scores"];
+        [[NSUserDefaults standardUserDefaults] setObject:tempColors forKey:@"colors"];
+        
+        [[NSUserDefaults standardUserDefaults] setInteger:noOfUsers-1 forKey:@"noOfUsers"];
+        if (currentPlayer == indexPath.row) {
+            currentPlayer = 0;
+        } else if (currentPlayer > indexPath.row) {
+            currentPlayer = currentPlayer - 1;
+        }
+        [[NSUserDefaults standardUserDefaults] setInteger:currentPlayer forKey:@"currentPlayer"];
+        
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                         withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    }
 }
-*/
 
 /*
 // Override to support rearranging the table view.
