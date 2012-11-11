@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BOViewController.h"
+#import "BOLeaderBoardViewController.h"
+#import "BOSettingsTableViewController.h"
 
 @interface BOTabBarController : UITabBarController
 

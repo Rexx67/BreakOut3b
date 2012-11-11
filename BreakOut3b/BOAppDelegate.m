@@ -12,10 +12,43 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    //_ NSlog(@"In BOAppDelegate didFinishLaunchingWithOptions:");
+    
+    // Create default arrays of players, scores and background colors selected by player
+    NSArray *defaultUsers = [NSArray arrayWithObjects:  nil];
+    NSArray *defaultDiffs = [NSArray arrayWithObjects:  nil];
+    NSArray *defaultScores = [NSArray arrayWithObjects:  nil];
+    NSArray *defaultBackgroundColors = [NSArray arrayWithObjects:  nil];
+    
+    // Set default currentPlayer to '-1'
+    NSDictionary *appDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   [NSNumber numberWithInt:-1], @"currentPlayer" // The "-1" setting means that this is a "cold start" of the app
+                                 , [NSNumber numberWithInt:0], @"noOfUsers"
+                                 , defaultUsers , @"users"
+                                 , defaultDiffs , @"diffs"
+                                 , defaultScores , @"scores"
+                                 , defaultBackgroundColors, @"colors"
+                                 , nil];
+    
+    // Register the defaults
+    [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     // Override point for customization after application launch.
+    BOSettingsTableViewController *bostvc;
+    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
+    bostvc = (BOSettingsTableViewController *)navigationController.topViewController;
+    
+    
+    // Ge länkar till BOSettingsTableViewController
+    NSMutableArray *users = [[NSMutableArray alloc] init];
+    bostvc.users = users;
+    
+
     return YES;
 }
-							
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

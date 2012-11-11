@@ -1,18 +1,18 @@
 //
-//  BOTabBarController.m
+//  BOLeaderBoardViewController.m
 //  BreakOut3b
 //
-//  Created by Carl Tengwall on 2012-11-07.
+//  Created by Carl Tengwall on 2012-11-09.
 //  Copyright (c) 2012 Carl Tengwall. All rights reserved.
 //
 
-#import "BOTabBarController.h"
+#import "BOLeaderBoardViewController.h"
 
-@interface BOTabBarController ()
+@interface BOLeaderBoardViewController ()
 
 @end
 
-@implementation BOTabBarController
+@implementation BOLeaderBoardViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -26,7 +26,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-   
+	// Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning

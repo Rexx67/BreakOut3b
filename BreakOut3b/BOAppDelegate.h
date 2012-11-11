@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BOSettingsTableViewController.h"
 
 @interface BOAppDelegate : UIResponder <UIApplicationDelegate>
 
