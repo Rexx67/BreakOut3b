@@ -26,6 +26,7 @@
         _difficulty = diff;
         _score = aScore;
         _backgroundColor = bkgColor;
+        //_ NSLog(@"bkgColor %@", bkgColor);
     }
     
     return self;

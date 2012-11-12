@@ -22,15 +22,30 @@
 
 @synthesize blocksToRemoveFromView = _blocksToRemoveFromView;
 @synthesize score = _score;
+@synthesize netScore = _netScore;
 @synthesize blocks = _blocks;
 @synthesize moSquare = _moSquare;
 @synthesize paddelRect = _paddelRect;
 @synthesize timeElapsed;
+@synthesize level = _level;
+@synthesize viewColor = _viewColor;
+@synthesize playerScore;
+@synthesize playerDiff;
 
 - (id)init {
     self = [super init];
     
     if (self) {
+        
+        int currentPlayer = [[NSUserDefaults standardUserDefaults] integerForKey:@"currentPlayer"];
+        NSLog(@"currentPlayer %d", currentPlayer);
+        NSArray *currentDiffs = [[NSUserDefaults standardUserDefaults] objectForKey:@"diffs"];
+        NSArray *currentScores = [[NSUserDefaults standardUserDefaults] objectForKey:@"scores"];
+        
+        playerDiff = [[currentDiffs objectAtIndex:currentPlayer] intValue];
+        NSLog(@"playerDiff %d", playerDiff);
+        playerScore = [[currentScores objectAtIndex:currentPlayer] intValue];
+        NSLog(@"playerScore %d", playerScore);
         // Init blocks
         // The array to hold the blocks
         _blocks = [[NSMutableArray alloc] initWithCapacity:50];
@@ -62,8 +77,25 @@
         
         BOMovingObject *bomo = [[BOMovingObject alloc] initAtPosition:CGPointMake(MO_POS_X, MO_POS_Y)];
     
-        // Get the initial velocity vector for the Moving Object
-        moVelocity = bomo.velocity;
+        // Set the initial velocity vector for the Moving Object based on DIfficulty
+        switch (playerDiff)
+        
+        {
+            case EASY:
+                moVelocity = bomo.velocity;
+                break;
+            case MODERATE:
+                moVelocity = CGPointMake(bomo.velocity.x*1.5,bomo.velocity.y*1.5);
+                break;
+            case HARD:
+                moVelocity = CGPointMake(bomo.velocity.x*2.,bomo.velocity.y*2.0);
+                break;
+            default:
+                moVelocity = bomo.velocity;
+                break;
+        }
+
+        // moVelocity = bomo.velocity;
 
         // Set Moving Object Rect to the size of the Moving Object image
         UIImage* moImage = [UIImage imageNamed:@"mo.png"];
@@ -100,6 +132,11 @@
         timeOld = timeNew;
         // Compute new elapsed time
         timeElapsed = timeNew - timeStart;
+        
+        // Compute current netScore
+        _netScore = (int)0.5+_score/timeElapsed;
+        NSLog(@"netScore = %d", _netScore);
+
         
         // Calculate new position of the mo
         _moSquare.origin.x += moVelocity.x * timeDiff;
@@ -346,6 +383,30 @@
     }
 }
 
+- (void) resetModel:(int) lvl color:(int) col {
+  
+    int currentPlayer = [[NSUserDefaults standardUserDefaults] integerForKey:@"currentPlayer"];
+    
+    NSArray *currentScores = [[NSUserDefaults standardUserDefaults] objectForKey:@"scores"];
+    NSMutableArray *tempScores = [[NSMutableArray alloc] initWithArray:currentScores];
+    
+    playerScore = [[currentScores objectAtIndex:currentPlayer] intValue];
+    NSLog(@"currentPlayer %d, playerScore %d", currentPlayer, playerScore);
+    
+    if (_netScore>playerScore) {
+        [tempScores replaceObjectAtIndex:currentPlayer withObject: [NSNumber numberWithInt:_netScore]];
+        [[NSUserDefaults standardUserDefaults] setObject:tempScores forKey:@"scores"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+
+    _blocks = nil;
+    _blocksToRemoveFromView = nil;
+    _paddelRect = CGRectMake(0,0,0,0);
+    _moSquare = CGRectMake(0,0,0,0);
+    _level = lvl;
+    _viewColor = col;
+    
+}
 
 @end
 

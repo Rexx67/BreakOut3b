@@ -80,7 +80,7 @@
             self.editing = NO;
             if (![textField.text length]) {
                 //_ NSLog(@"dismissModalViewC");
-               [[self presentingViewController] dismissModalViewControllerAnimated:YES];
+               [[self presentingViewController] dismissViewControllerAnimated:YES completion:nil];
             } else {
                 //_ NSLog(@"self.delegate newUserViewController: gotUserId: %@ diff: %@ score: %d color: %@",
                 //      self.theUserId, self.theDifficulty, 0, self.theBackgroundColor);

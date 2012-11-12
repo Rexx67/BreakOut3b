@@ -17,6 +17,8 @@
 @synthesize boNewUserViewController = _boNewUserViewController;
 @synthesize boTabBarController = _boTabBarController;
 @synthesize users = _users;
+@synthesize player = _player;
+
 
 - (void)setUsers:(NSMutableArray *)users {
     if (!users) NSLog(@"Who is trying to kill users?");
@@ -60,6 +62,14 @@
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[self tableView] reloadData];
+    
+  //  [self.userIdTextField becomeFirstResponder];
+  //  self.userIdTextField.delegate = self;
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -217,15 +227,9 @@
 {
     
     NSLog(@"didSelectRowAtIndexPath:");
-    // Om iPhone, pusha in detaljkontrollern
+    // Push in in BOViewController
     [self performSegueWithIdentifier:@"pushPlay" sender:self];
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+
 }
 - (void)boNewUserViewController:(BONewUserViewController *) sender
                       gotUserId:(NSString *) uid
@@ -292,7 +296,7 @@
         NSLog(@"Afterwards: users.count = %d",self.users.count);
     }
     
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
     [[self tableView] reloadData];
 }
 

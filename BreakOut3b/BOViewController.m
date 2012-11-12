@@ -18,6 +18,16 @@
 {
     [super viewDidLoad];
     
+
+    int currentPlayer = [[NSUserDefaults standardUserDefaults] integerForKey:@"currentPlayer"];
+    NSLog(@"currentPlayer %d", currentPlayer);
+    NSArray *currentScores = [[NSUserDefaults standardUserDefaults] objectForKey:@"scores"];
+    NSArray *currentColors = [[NSUserDefaults standardUserDefaults] objectForKey:@"colors"];
+    color = [[currentColors objectAtIndex:currentPlayer] intValue];
+     NSLog(@"color %d", color);
+    maxScore = [[currentScores objectAtIndex:currentPlayer] intValue];
+         NSLog(@"maxScore %d", maxScore);
+    
     // Initialize the model of the game
     gameModel = [[BOModel alloc] init];
     
@@ -41,6 +51,28 @@
         //	Add the block to the array
         [self.view addSubview:bobv];
     }
+    
+    switch (color)
+    
+    {
+        case WHITE_BKGCOLOR:
+            realColor = [UIColor whiteColor];
+            break;
+        case LIGHTGRAY_BKGCOLOR:
+            realColor = [UIColor lightGrayColor];
+            break;
+        case GRAY_BKGCOLOR:
+            realColor = [UIColor grayColor];
+            break;
+        case YELLOW_BKGCOLOR:
+            realColor = [UIColor yellowColor];
+            break;
+        default:
+            realColor = [UIColor whiteColor];
+        break;
+    }
+
+     [self.view setBackgroundColor:realColor];  // Set user specific background color
     
     
        
@@ -76,8 +108,8 @@
         // Remove the last blocks from view
         [gameModel clearScreen];
         // [The model should return a score and update the top ten list]
-        int netScore = (int)0.5+gameModel.score/gameModel.timeElapsed;
-        NSString *scoreString =[NSString stringWithFormat:@"Score = %d", netScore];
+        
+        NSString *scoreString =[NSString stringWithFormat:@"Score = %d", gameModel.netScore];
         [self gameOver:scoreString];
         
     }
@@ -104,6 +136,11 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    for (UIView *view in self.view.subviews) {
+        [view removeFromSuperview];
+    }
+   // [gameTimer invalidate];
+   //  [gameModel resetModel:0 color:1];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -119,6 +156,8 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
+    [gameTimer invalidate];
+    [gameModel resetModel:0 color:1];
 }
 
 - (void)viewDidDisappear:(BOOL)animated

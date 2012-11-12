@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BOTabBarController.h"
 #import "BONewUserViewController.h"
+#import "BOViewController.h"
 #import "BOUser.h"
 #import "BOUserCell.h"
 
@@ -18,6 +19,7 @@
 
 @property (strong, nonatomic) BONewUserViewController  *boNewUserViewController;
 @property (strong, nonatomic) BOTabBarController *boTabBarController;
-@property (strong, nonatomic) NSMutableArray *users; // This view controllers model consists of User objects
+@property (strong, nonatomic) NSMutableArray *users; // This view controller's model consists of User objects
+@property (strong, nonatomic) BOUser *player;
 
 @end

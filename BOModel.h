@@ -21,6 +21,9 @@
 #define MARGIN 0.05
 #define SHRINK_FACTOR 0.9
 #define TOP_OFFSET 20
+#define EASY 1
+#define MODERATE 2
+#define HARD 3
 
 @interface BOModel : NSObject {
     NSMutableArray* blocks;
@@ -31,21 +34,28 @@
     CGFloat timeDiff;
     CGFloat timeStart;
     CGFloat timeElapsed;
-    int score;
+    int playerScore;  // Score for current player
+    int playerDiff;   // Dificulty leel for current player
 }
 
 @property (readonly) NSMutableArray* blocks;
 @property (readonly) CGRect moSquare;
 @property CGRect paddelRect;
 @property (nonatomic) int score;
+@property (nonatomic) int netScore;
+@property (nonatomic) int playerScore;
+@property (nonatomic) int playerDiff;
+
+
 @property (nonatomic) CGFloat timeElapsed;
+@property (nonatomic) int level;
+@property (nonatomic) int viewColor;
 
 
 - (void) updateModelWithTime:(CFTimeInterval) timestamp;
 - (void) checkCollisionWithBlocks;
 - (void) checkCollisionWithPaddel;
 - (void) clearScreen;
-
-
+- (void) resetModel:(int) lvl color:(int) col;
 
 @end
