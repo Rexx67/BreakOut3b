@@ -15,6 +15,9 @@
 @property (nonatomic, copy) NSNumber *score;
 @property (nonatomic, copy) NSNumber *backgroundColor;
 
-- (id)initWithId:(NSString *) uid difficulty:(NSNumber *)diff score: (NSNumber *) aScore andBackground: (NSNumber *) bkgColor;
+- (id)initWithId:(NSString *) uid
+      difficulty:(NSNumber *)diff
+           score: (NSNumber *) aScore
+   andBackground: (NSNumber *) bkgColor;
 
 @end

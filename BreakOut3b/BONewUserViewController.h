@@ -15,8 +15,8 @@
 @protocol BONewUserViewControllerDelegate
 
 - (void)boNewUserViewController:(BONewUserViewController *) sender
-                     gotUserId:(NSString *)uid
-                    gotDifficulty:(NSNumber *)diff
+                      gotUserId:(NSString *)uid
+                  gotDifficulty:(NSNumber *)diff
                           score:(NSNumber *) aScore
           andGotBackgroundColor:(NSNumber *) bkg;
 @end

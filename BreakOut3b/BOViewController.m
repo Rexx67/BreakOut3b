@@ -8,28 +8,35 @@
 
 #import "BOViewController.h"
 
-@interface BOViewController ()
+@interface BOViewController () 
 
 @end
 
+
 @implementation BOViewController
+
+@synthesize users = _users;
+@synthesize delegate = _delegate;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self initLevel:0];
     
-
+}
+-(void) initLevel:(int) lvl {
+    gameLevel = lvl;
     int currentPlayer = [[NSUserDefaults standardUserDefaults] integerForKey:@"currentPlayer"];
-    NSLog(@"currentPlayer %d", currentPlayer);
+    //_ NSLog(@"currentPlayer %d", currentPlayer);
     NSArray *currentScores = [[NSUserDefaults standardUserDefaults] objectForKey:@"scores"];
     NSArray *currentColors = [[NSUserDefaults standardUserDefaults] objectForKey:@"colors"];
     color = [[currentColors objectAtIndex:currentPlayer] intValue];
-     NSLog(@"color %d", color);
+     //_ NSLog(@"color %d", color);
     maxScore = [[currentScores objectAtIndex:currentPlayer] intValue];
-         NSLog(@"maxScore %d", maxScore);
+         //_ NSLog(@"maxScore %d", maxScore);
     
     // Initialize the model of the game
-    gameModel = [[BOModel alloc] init];
+    gameModel = [[BOModel alloc] initWithLevel: lvl];
     
     // Draw the Moving Object
     mo = [[UIImageView alloc] initWithImage:
@@ -104,20 +111,47 @@
     
     if ([gameModel.blocks count] == 0)
     {
-        // No more blocks, end the game
+        // No more blocks, end the game on the current level
         // Remove the last blocks from view
         [gameModel clearScreen];
+        
         // [The model should return a score and update the top ten list]
         
         NSString *scoreString =[NSString stringWithFormat:@"Score = %d", gameModel.netScore];
-        [self gameOver:scoreString];
+        //_ NSLog(@"scoreString=%@", scoreString);
+        if (gameLevel<1) [self levelOver:scoreString];
+        else [self gameOver:scoreString];
         
     }
     
     
 }
+
+-(void) levelOver:(NSString *)message
+{
+    //_ NSLog(@"BOViewController levelOver");
+    // Call this method to end the game
+    // Invalidate the timer
+    [gameTimer invalidate];
+    
+    // Show an alert with the results
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Level Over"
+                                                    message:message
+                                                   delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles: nil];
+    [alert show];
+    for (UIView *view in self.view.subviews) {
+        [view removeFromSuperview];
+    }
+    //[NSThread sleepForTimeInterval:1.0];
+    [gameModel resetModel:0 color:1];
+    [self initLevel:1];
+    
+}
 -(void) gameOver:(NSString *)message
 {
+    //_ NSLog(@"BOViewController gameOver");
     // Call this method to end the game
     // Invalidate the timer
     [gameTimer invalidate];
@@ -129,6 +163,11 @@
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles: nil];
     [alert show];
+    for (UIView *view in self.view.subviews) {
+        [view removeFromSuperview];
+    }
+    [gameModel resetModel:0 color:1];
+
 }
 
 - (void)viewDidUnload
@@ -139,8 +178,9 @@
     for (UIView *view in self.view.subviews) {
         [view removeFromSuperview];
     }
-   // [gameTimer invalidate];
-   //  [gameModel resetModel:0 color:1];
+    //_ NSLog(@"BOViewController viewDidUmload");
+   [gameTimer invalidate];
+   [gameModel resetModel:0 color:1];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -155,7 +195,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-	[super viewWillDisappear:animated];
+	 //_ NSLog(@"BOViewController viewWillDisappear");
+    [super viewWillDisappear:animated];
     [gameTimer invalidate];
     [gameModel resetModel:0 color:1];
 }

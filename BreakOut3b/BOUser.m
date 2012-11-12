@@ -18,7 +18,11 @@
 
 // Constructor
 
-- (id)initWithId:(NSString *) uid difficulty:(NSNumber *)diff score:(NSNumber *) aScore andBackground: (NSNumber *) bkgColor {
+- (id)initWithId:(NSString *) uid
+      difficulty:(NSNumber *)diff
+           score:(NSNumber *) aScore
+   andBackground: (NSNumber *) bkgColor {
+    
     self = [super init];
     
     if (self) {
@@ -26,9 +30,7 @@
         _difficulty = diff;
         _score = aScore;
         _backgroundColor = bkgColor;
-        //_ NSLog(@"bkgColor %@", bkgColor);
     }
-    
     return self;
 }
 

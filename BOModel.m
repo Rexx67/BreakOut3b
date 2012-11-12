@@ -32,28 +32,33 @@
 @synthesize playerScore;
 @synthesize playerDiff;
 
-- (id)init {
+- (id)initWithLevel: (int) aLevel {
     self = [super init];
     
     if (self) {
-        
+        //_ NSLog(@"aLevel %d", aLevel);
         int currentPlayer = [[NSUserDefaults standardUserDefaults] integerForKey:@"currentPlayer"];
-        NSLog(@"currentPlayer %d", currentPlayer);
+        //_ NSLog(@"currentPlayer %d", currentPlayer);
         NSArray *currentDiffs = [[NSUserDefaults standardUserDefaults] objectForKey:@"diffs"];
         NSArray *currentScores = [[NSUserDefaults standardUserDefaults] objectForKey:@"scores"];
         
         playerDiff = [[currentDiffs objectAtIndex:currentPlayer] intValue];
-        NSLog(@"playerDiff %d", playerDiff);
+        //_ NSLog(@"playerDiff %d", playerDiff);
         playerScore = [[currentScores objectAtIndex:currentPlayer] intValue];
-        NSLog(@"playerScore %d", playerScore);
+        //_ NSLog(@"playerScore %d", playerScore); // this is the best score the user has had so far
+        
         // Init blocks
         // The array to hold the blocks
         _blocks = [[NSMutableArray alloc] initWithCapacity:50];
         _blocksToRemoveFromView = [[NSMutableArray alloc] initWithCapacity:50];
         
+        // Level support: Display three rows for level 0 and six rows for level 1
+        int maxRows = 6;
+        if (aLevel==0) maxRows = 3;
+    
         BOBlockView* bobv;
         
-        for (int row = 0; row<=5; row++)
+        for (int row = 0; row<=maxRows -1 ; row++)
         {
             for (int col = 0; col<6; col++)
             {
@@ -70,16 +75,15 @@
         }
         
         // Set Paddel Rect to the size of the Paddel image
-        UIImage* paddelImage = [UIImage imageNamed:@"paddel.png"];
+        UIImage* paddelImage = [UIImage imageNamed:@"paddel.png"];  // Really exciting picture
         CGSize paddelSize = [paddelImage size];
-        _paddelRect = CGRectMake(0.0, VIEW_HEIGHT - 40,
+        _paddelRect = CGRectMake(0.0, VIEW_HEIGHT - 60,
                                 paddelSize.width, paddelSize.height);
         
         BOMovingObject *bomo = [[BOMovingObject alloc] initAtPosition:CGPointMake(MO_POS_X, MO_POS_Y)];
     
-        // Set the initial velocity vector for the Moving Object based on DIfficulty
+        // Set the initial velocity vector for the Moving Object based on Difficulty
         switch (playerDiff)
-        
         {
             case EASY:
                 moVelocity = bomo.velocity;
@@ -95,10 +99,8 @@
                 break;
         }
 
-        // moVelocity = bomo.velocity;
-
         // Set Moving Object Rect to the size of the Moving Object image
-        UIImage* moImage = [UIImage imageNamed:@"mo.png"];
+        UIImage* moImage = [UIImage imageNamed:@"mo.png"]; // Equally exciting
         CGSize moSize = [moImage size];
         _moSquare = CGRectMake(bomo.position.x,
                                bomo.position.y,
@@ -110,8 +112,6 @@
         
         // Initilaize score
         _score = 0;
-        
-        
     }
     
     return self;
@@ -135,15 +135,12 @@
         
         // Compute current netScore
         _netScore = (int)0.5+_score/timeElapsed;
-        NSLog(@"netScore = %d", _netScore);
-
+        // NSLog(@"netScore = %d", _netScore);
         
         // Calculate new position of the mo
         _moSquare.origin.x += moVelocity.x * timeDiff;
         _moSquare.origin.y += moVelocity.y * timeDiff;
         
-        // Check for collision with screen edges
-        //_[self checkCollisionWithScreenEdges];
         // Handle collision with bounds by resetting direction if needed
         while([self changeDirectionForBounds])
         {
@@ -164,7 +161,7 @@
 
 - (BOOL) changeDirectionForBounds{
     
-    // Change ball direction if it hit an edge of the screen
+    // Change direction of Moving Object if it hits an edge of the screen
 
     BOOL hitBounds = NO;
     if ([self hitLeft])
@@ -187,16 +184,11 @@
     
     if ([self hitBottom])
     {
-        // [Just let the mo bounce back!]
-        // mo went off the bottom of the screen
-        // In a production game, you'd want to reduce the player's
-        // mo count by one and reset the mo.  To keep this example
-        // simple, we are not keeping score or mo count. We'll
-        // just reset the mo
+        // Just let the Moving Object bounce back!
+        // Here we could allow some objects to fall off and keep
+        // a count on how many lives we have left. If some lives are left
+        // insert a new Moving Object by specifying its coordinates and velocity
         
-        //_ moSquare.origin.x = 180.0;
-        //_ moSquare.origin.y = 220.0;
-
         moVelocity.y = -1*abs(moVelocity.y);
         hitBounds = YES;
     }
@@ -206,7 +198,7 @@
 - (BOOL) hitLeft {
 	if (_moSquare.origin.x <= 0)
     {
-	    NSLog(@"hitLeft");
+	    //_ NSLog(@"hitLeft");
         return YES;
     }
     else return NO;
@@ -215,7 +207,7 @@
 - (BOOL) hitRight {
     if (_moSquare.origin.x >= VIEW_WIDTH - MO_SIZE)
     {
-        NSLog(@"hitRight");
+        //_ NSLog(@"hitRight");
         return YES;
     }
     else return NO;
@@ -224,7 +216,7 @@
 - (BOOL) hitTop {
     if (_moSquare.origin.y <=  0)
     {
-        NSLog(@"hitTop");
+        //_ NSLog(@"hitTop");
         return YES;
     }
     else return NO;
@@ -233,7 +225,7 @@
 - (BOOL) hitBottom {
     if (_moSquare.origin.y >=  VIEW_HEIGHT - MO_SIZE)
     {
-        NSLog(@"hitBottom");
+        //_ NSLog(@"hitBottom");
         return YES;
     }
     else return NO;
@@ -277,13 +269,6 @@
                 [[_blocksToRemoveFromView objectAtIndex:0] removeFromSuperview];
                 [_blocksToRemoveFromView removeObjectAtIndex:0];
             }
-            //    [bobv removeFromSuperview];
-            
-            
-            // In a production game, you'd want to add to the player's score
-            // here, when a block is hit. To keep this example
-            // simple, we are not keeping score.
-            // [Add score keeping]
             
             break;
         }
@@ -384,14 +369,14 @@
 }
 
 - (void) resetModel:(int) lvl color:(int) col {
-  
+    // NSLog(@"ResetModel");
     int currentPlayer = [[NSUserDefaults standardUserDefaults] integerForKey:@"currentPlayer"];
     
     NSArray *currentScores = [[NSUserDefaults standardUserDefaults] objectForKey:@"scores"];
     NSMutableArray *tempScores = [[NSMutableArray alloc] initWithArray:currentScores];
     
     playerScore = [[currentScores objectAtIndex:currentPlayer] intValue];
-    NSLog(@"currentPlayer %d, playerScore %d", currentPlayer, playerScore);
+    //_ NSLog(@"currentPlayer %d, playerScore %d", currentPlayer, playerScore);
     
     if (_netScore>playerScore) {
         [tempScores replaceObjectAtIndex:currentPlayer withObject: [NSNumber numberWithInt:_netScore]];

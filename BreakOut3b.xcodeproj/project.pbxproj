@@ -11,7 +11,6 @@
 		5F14F8F3164D9D7300055C85 /* BONewUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F14F8F2164D9D7300055C85 /* BONewUserViewController.m */; };
 		5F14F8F6164DA1CF00055C85 /* BOUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F14F8F5164DA1CF00055C85 /* BOUserCell.m */; };
 		5F14F8F9164DAAF700055C85 /* BOUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F14F8F8164DAAF700055C85 /* BOUser.m */; };
-		5F4FFC57164A99B6009A541F /* BOTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4FFC56164A99B6009A541F /* BOTabBarController.m */; };
 		5F67190F1649CA0600A86587 /* BOMovingObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F67190E1649CA0500A86587 /* BOMovingObject.m */; };
 		5F6DC7DB1649A5B5004B713C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F6DC7DA1649A5B5004B713C /* UIKit.framework */; };
 		5F6DC7DD1649A5B5004B713C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F6DC7DC1649A5B5004B713C /* Foundation.framework */; };
@@ -35,7 +34,6 @@
 		5F6DC8271649B3BC004B713C /* mo.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F6DC8261649B3BC004B713C /* mo.png */; };
 		5F6DC8291649B3D2004B713C /* paddel.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F6DC8281649B3D2004B713C /* paddel.png */; };
 		5F9C55D2164C4C1D000E6F90 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F9C55D1164C4C1D000E6F90 /* play.png */; };
-		5F9C55FF164D43FA000E6F90 /* BOLeaderBoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9C55FE164D43FA000E6F90 /* BOLeaderBoardViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,8 +55,6 @@
 		5F14F8F5164DA1CF00055C85 /* BOUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BOUserCell.m; sourceTree = "<group>"; };
 		5F14F8F7164DAAF700055C85 /* BOUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BOUser.h; sourceTree = "<group>"; };
 		5F14F8F8164DAAF700055C85 /* BOUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BOUser.m; sourceTree = "<group>"; };
-		5F4FFC55164A99B6009A541F /* BOTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BOTabBarController.h; sourceTree = "<group>"; };
-		5F4FFC56164A99B6009A541F /* BOTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BOTabBarController.m; sourceTree = "<group>"; };
 		5F67190D1649CA0500A86587 /* BOMovingObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BOMovingObject.h; sourceTree = "<group>"; };
 		5F67190E1649CA0500A86587 /* BOMovingObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BOMovingObject.m; sourceTree = "<group>"; };
 		5F6DC7D61649A5B5004B713C /* BreakOut3b.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BreakOut3b.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,8 +87,6 @@
 		5F6DC8261649B3BC004B713C /* mo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mo.png; path = ../mo.png; sourceTree = "<group>"; };
 		5F6DC8281649B3D2004B713C /* paddel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = paddel.png; path = ../paddel.png; sourceTree = "<group>"; };
 		5F9C55D1164C4C1D000E6F90 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play.png; path = ../play.png; sourceTree = "<group>"; };
-		5F9C55FD164D43FA000E6F90 /* BOLeaderBoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BOLeaderBoardViewController.h; sourceTree = "<group>"; };
-		5F9C55FE164D43FA000E6F90 /* BOLeaderBoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BOLeaderBoardViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,18 +162,12 @@
 				5F6DC7E91649A5B5004B713C /* BOAppDelegate.h */,
 				5F6DC7EA1649A5B5004B713C /* BOAppDelegate.m */,
 				5F6DC7F21649A5B5004B713C /* MainStoryboard.storyboard */,
-				5F14F8F7164DAAF700055C85 /* BOUser.h */,
-				5F14F8F8164DAAF700055C85 /* BOUser.m */,
 				5F14F8F1164D9D7300055C85 /* BONewUserViewController.h */,
 				5F14F8F2164D9D7300055C85 /* BONewUserViewController.m */,
 				5F14F8EE164D9C9E00055C85 /* BOSettingsTableViewController.h */,
 				5F14F8EF164D9C9E00055C85 /* BOSettingsTableViewController.m */,
 				5F14F8F4164DA1CF00055C85 /* BOUserCell.h */,
 				5F14F8F5164DA1CF00055C85 /* BOUserCell.m */,
-				5F9C55FD164D43FA000E6F90 /* BOLeaderBoardViewController.h */,
-				5F9C55FE164D43FA000E6F90 /* BOLeaderBoardViewController.m */,
-				5F4FFC55164A99B6009A541F /* BOTabBarController.h */,
-				5F4FFC56164A99B6009A541F /* BOTabBarController.m */,
 				5F6DC7F51649A5B5004B713C /* BOViewController.h */,
 				5F6DC7F61649A5B5004B713C /* BOViewController.m */,
 				5F6DC8171649A720004B713C /* BOBlockView.h */,
@@ -226,10 +214,12 @@
 		5F6DC81D1649A8AA004B713C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5F14F8F7164DAAF700055C85 /* BOUser.h */,
+				5F14F8F8164DAAF700055C85 /* BOUser.m */,
 				5F67190D1649CA0500A86587 /* BOMovingObject.h */,
 				5F67190E1649CA0500A86587 /* BOMovingObject.m */,
-				5F6DC81B1649A83E004B713C /* BOModel.m */,
 				5F6DC81A1649A83E004B713C /* BOModel.h */,
+				5F6DC81B1649A83E004B713C /* BOModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -354,8 +344,6 @@
 				5F6DC8191649A720004B713C /* BOBlockView.m in Sources */,
 				5F6DC81C1649A83E004B713C /* BOModel.m in Sources */,
 				5F67190F1649CA0600A86587 /* BOMovingObject.m in Sources */,
-				5F4FFC57164A99B6009A541F /* BOTabBarController.m in Sources */,
-				5F9C55FF164D43FA000E6F90 /* BOLeaderBoardViewController.m in Sources */,
 				5F14F8F0164D9C9E00055C85 /* BOSettingsTableViewController.m in Sources */,
 				5F14F8F3164D9D7300055C85 /* BONewUserViewController.m in Sources */,
 				5F14F8F6164DA1CF00055C85 /* BOUserCell.m in Sources */,

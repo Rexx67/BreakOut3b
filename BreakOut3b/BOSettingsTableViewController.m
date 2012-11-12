@@ -15,7 +15,6 @@
 @implementation BOSettingsTableViewController
 
 @synthesize boNewUserViewController = _boNewUserViewController;
-@synthesize boTabBarController = _boTabBarController;
 @synthesize users = _users;
 @synthesize player = _player;
 
@@ -80,9 +79,11 @@
 {
     //_ NSLog(@"In BOSettingsTableViewController prepareForSegue:");
     if ([[segue identifier] isEqualToString:@"pushPlay"]) {
-        //_ NSLog(@"pushPlay");
-        // Send the user to the Play view
-        NSIndexPath *selectedRowIndex = [self.tableView indexPathForSelectedRow];
+         //_ NSLog(@"pushPlay");
+         BOViewController *bovc = segue.destinationViewController;
+         bovc.users = self.users;
+         //Send the user to the Play view
+         NSIndexPath *selectedRowIndex = [self.tableView indexPathForSelectedRow];
         
         // Set the selected user 
         [[NSUserDefaults standardUserDefaults] setInteger:selectedRowIndex.row forKey:@"currentPlayer"];
@@ -156,7 +157,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:
 (UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"commitEditingStyle:");
+    //_ NSLog(@"commitEditingStyle:");
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
         //[self.links removeObjectAtIndex:indexPath.row];
@@ -226,9 +227,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    NSLog(@"didSelectRowAtIndexPath:");
+    //_ NSLog(@"didSelectRowAtIndexPath:");
     // Push in in BOViewController
-    [self performSegueWithIdentifier:@"pushPlay" sender:self];
+    //[self performSegueWithIdentifier:@"pushPlay" sender:self];
 
 }
 - (void)boNewUserViewController:(BONewUserViewController *) sender
@@ -240,25 +241,14 @@
     //_ NSLog(@"In BOSettingsTableViewController boNewUserViewController:");
 
     NSMutableArray *userArray = [[NSMutableArray alloc] init];
-  //  NSMutableArray *test = [[NSMutableArray alloc] init];
-
     
     BOUser *newUser = [[BOUser alloc] initWithId:uid difficulty:diff score: score
                            andBackground:bkg];
-    //_ NSLog(@"newUser %@",newUser);
-    //_ NSLog(@"users.count = %d",self.users.count);
-  //  NSIndexPath *newPath = [NSIndexPath indexPathForRow:self.users.count inSection:0];
-  //   NSLog(@"newPath.row = %d",newPath.row);
-  [self.users arrayByAddingObject:newUser];
-//test = self.users;
- //   [test arrayByAddingObject:newUser];
-  //  self.users = test;
-
-     NSLog(@"After insert users.count = %d",self.users.count);
+    [self.users arrayByAddingObject:newUser];
     
     // Save new user for the future
     if (newUser) {
-        NSLog(@"newUser");
+        //_ NSLog(@"newUser");
         NSArray *newUsers = [[[NSUserDefaults standardUserDefaults] objectForKey:@"users"] arrayByAddingObject:uid];
         NSArray *newDiffs = [[[NSUserDefaults standardUserDefaults] objectForKey:@"diffs"] arrayByAddingObject:diff];
         NSArray *newScores = [[[NSUserDefaults standardUserDefaults] objectForKey:@"scores"] arrayByAddingObject:[NSNumber numberWithInt:0]];
@@ -266,7 +256,6 @@
         
         int noOfUsers = 1 + [[NSUserDefaults standardUserDefaults] integerForKey:@"noOfUsers"];
     
-        
         NSDictionary *appSettings = [NSDictionary dictionaryWithObjectsAndKeys:
                                        [NSNumber numberWithInt:noOfUsers-1], @"currentPlayer"
                                      , [NSNumber numberWithInt:noOfUsers], @"noOfUsers"
@@ -293,11 +282,20 @@
         }
         
         self.users = [NSArray arrayWithArray:userArray];
-        NSLog(@"Afterwards: users.count = %d",self.users.count);
     }
     
     [self dismissViewControllerAnimated:YES completion:nil];
     [[self tableView] reloadData];
+}
+
+- (void)newScore:(BOViewController *) sender
+       withScore: (int) myScore {
+       self.users = sender.users;
+    NSLog(@"Score=%d",myScore);
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [[self tableView] reloadData];
+
+    
 }
 
 @end

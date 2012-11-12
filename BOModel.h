@@ -17,7 +17,7 @@
 #define ACCEL 0.2           // Every hit on the paddel contributes to a speed change by this relative amount
 #define MIN_CHANGE 15       // To ensure that we have a finite speed
 #define VIEW_WIDTH 320.0
-#define VIEW_HEIGHT 366.0
+#define VIEW_HEIGHT 436.0   // Should be updated for iPhone 5
 #define MARGIN 0.05
 #define SHRINK_FACTOR 0.9
 #define TOP_OFFSET 20
@@ -51,7 +51,7 @@
 @property (nonatomic) int level;
 @property (nonatomic) int viewColor;
 
-
+- (id) initWithLevel: (int) aLevel;
 - (void) updateModelWithTime:(CFTimeInterval) timestamp;
 - (void) checkCollisionWithBlocks;
 - (void) checkCollisionWithPaddel;
