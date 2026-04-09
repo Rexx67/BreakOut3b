@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		1A2B3C4D5E6F700100000001 /* BOSceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F700100000003 /* BOSceneDelegate.m */; };
+		2B3C4D5E6F70010000000101 /* AppIcon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B3C4D5E6F70010000000102 /* AppIcon-60@2x.png */; };
+		2B3C4D5E6F70010000000103 /* AppIcon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B3C4D5E6F70010000000104 /* AppIcon-60@3x.png */; };
+		2B3C4D5E6F70010000000105 /* AppIcon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B3C4D5E6F70010000000106 /* AppIcon-76.png */; };
+		2B3C4D5E6F70010000000107 /* AppIcon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B3C4D5E6F70010000000108 /* AppIcon-76@2x.png */; };
+		2B3C4D5E6F70010000000109 /* AppIcon-83.5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B3C4D5E6F7001000000010A /* AppIcon-83.5@2x.png */; };
+		2B3C4D5E6F7001000000010B /* AppIcon-1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B3C4D5E6F7001000000010C /* AppIcon-1024.png */; };
 		5F14F8F0164D9C9E00055C85 /* BOSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F14F8EF164D9C9E00055C85 /* BOSettingsTableViewController.m */; };
 		5F14F8F3164D9D7300055C85 /* BONewUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F14F8F2164D9D7300055C85 /* BONewUserViewController.m */; };
 		5F14F8F6164DA1CF00055C85 /* BOUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F14F8F5164DA1CF00055C85 /* BOUserCell.m */; };
@@ -50,6 +56,12 @@
 /* Begin PBXFileReference section */
 		1A2B3C4D5E6F700100000002 /* BOSceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BOSceneDelegate.h; sourceTree = "<group>"; };
 		1A2B3C4D5E6F700100000003 /* BOSceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BOSceneDelegate.m; sourceTree = "<group>"; };
+		2B3C4D5E6F70010000000102 /* AppIcon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIcon-60@2x.png"; sourceTree = "<group>"; };
+		2B3C4D5E6F70010000000104 /* AppIcon-60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIcon-60@3x.png"; sourceTree = "<group>"; };
+		2B3C4D5E6F70010000000106 /* AppIcon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIcon-76.png"; sourceTree = "<group>"; };
+		2B3C4D5E6F70010000000108 /* AppIcon-76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIcon-76@2x.png"; sourceTree = "<group>"; };
+		2B3C4D5E6F7001000000010A /* AppIcon-83.5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIcon-83.5@2x.png"; sourceTree = "<group>"; };
+		2B3C4D5E6F7001000000010C /* AppIcon-1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIcon-1024.png"; sourceTree = "<group>"; };
 		5F14F8EE164D9C9E00055C85 /* BOSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BOSettingsTableViewController.h; sourceTree = "<group>"; };
 		5F14F8EF164D9C9E00055C85 /* BOSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BOSettingsTableViewController.m; sourceTree = "<group>"; };
 		5F14F8F1164D9D7300055C85 /* BONewUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BONewUserViewController.h; sourceTree = "<group>"; };
@@ -117,6 +129,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2B3C4D5E6F70010000000100 /* AppIcons */ = {
+			isa = PBXGroup;
+			children = (
+				2B3C4D5E6F7001000000010C /* AppIcon-1024.png */,
+				2B3C4D5E6F70010000000102 /* AppIcon-60@2x.png */,
+				2B3C4D5E6F70010000000104 /* AppIcon-60@3x.png */,
+				2B3C4D5E6F70010000000106 /* AppIcon-76.png */,
+				2B3C4D5E6F70010000000108 /* AppIcon-76@2x.png */,
+				2B3C4D5E6F7001000000010A /* AppIcon-83.5@2x.png */,
+			);
+			path = AppIcons;
+			sourceTree = "<group>";
+		};
 		5F59A15E164A391800963865 /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -185,6 +210,7 @@
 		5F6DC7E11649A5B5004B713C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				2B3C4D5E6F70010000000100 /* AppIcons */,
 				5F9C55D1164C4C1D000E6F90 /* play.png */,
 				5F6DC7E21649A5B5004B713C /* BreakOut3b-Info.plist */,
 				5F6DC7E31649A5B5004B713C /* InfoPlist.strings */,
@@ -307,6 +333,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B3C4D5E6F7001000000010B /* AppIcon-1024.png in Resources */,
+				2B3C4D5E6F70010000000101 /* AppIcon-60@2x.png in Resources */,
+				2B3C4D5E6F70010000000103 /* AppIcon-60@3x.png in Resources */,
+				2B3C4D5E6F70010000000105 /* AppIcon-76.png in Resources */,
+				2B3C4D5E6F70010000000107 /* AppIcon-76@2x.png in Resources */,
+				2B3C4D5E6F70010000000109 /* AppIcon-83.5@2x.png in Resources */,
 				5F6DC7E51649A5B5004B713C /* InfoPlist.strings in Resources */,
 				5F6DC7ED1649A5B5004B713C /* Default.png in Resources */,
 				5F6DC7EF1649A5B5004B713C /* Default@2x.png in Resources */,
