@@ -272,12 +272,18 @@
 				CLASSPREFIX = BO;
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Carl Tengwall";
+				TargetAttributes = {
+					5F6DC7D51649A5B5004B713C = {
+						DevelopmentTeam = UMQPXVD9VE;
+					};
+				};
 			};
 			buildConfigurationList = 5F6DC7D01649A5B5004B713C /* Build configuration list for PBXProject "BreakOut3b" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 5F6DC7CB1649A5B5004B713C;
@@ -450,9 +456,11 @@
 		5F6DC8101649A5B5004B713C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = UMQPXVD9VE;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BreakOut3b/BreakOut3b-Prefix.pch";
 				INFOPLIST_FILE = "BreakOut3b/BreakOut3b-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -461,9 +469,11 @@
 		5F6DC8111649A5B5004B713C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = UMQPXVD9VE;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BreakOut3b/BreakOut3b-Prefix.pch";
 				INFOPLIST_FILE = "BreakOut3b/BreakOut3b-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
