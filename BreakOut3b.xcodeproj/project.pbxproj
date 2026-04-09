@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A2B3C4D5E6F700100000001 /* BOSceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F700100000003 /* BOSceneDelegate.m */; };
 		5F14F8F0164D9C9E00055C85 /* BOSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F14F8EF164D9C9E00055C85 /* BOSettingsTableViewController.m */; };
 		5F14F8F3164D9D7300055C85 /* BONewUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F14F8F2164D9D7300055C85 /* BONewUserViewController.m */; };
 		5F14F8F6164DA1CF00055C85 /* BOUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F14F8F5164DA1CF00055C85 /* BOUserCell.m */; };
@@ -47,6 +48,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A2B3C4D5E6F700100000002 /* BOSceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BOSceneDelegate.h; sourceTree = "<group>"; };
+		1A2B3C4D5E6F700100000003 /* BOSceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BOSceneDelegate.m; sourceTree = "<group>"; };
 		5F14F8EE164D9C9E00055C85 /* BOSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BOSettingsTableViewController.h; sourceTree = "<group>"; };
 		5F14F8EF164D9C9E00055C85 /* BOSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BOSettingsTableViewController.m; sourceTree = "<group>"; };
 		5F14F8F1164D9D7300055C85 /* BONewUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BONewUserViewController.h; sourceTree = "<group>"; };
@@ -82,8 +85,8 @@
 		5F6DC8151649A5D6004B713C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5F6DC8171649A720004B713C /* BOBlockView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BOBlockView.h; sourceTree = "<group>"; };
 		5F6DC8181649A720004B713C /* BOBlockView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BOBlockView.m; sourceTree = "<group>"; };
-		5F6DC81A1649A83E004B713C /* BOModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BOModel.h; path = ../BOModel.h; sourceTree = "<group>"; };
-		5F6DC81B1649A83E004B713C /* BOModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BOModel.m; path = ../BOModel.m; sourceTree = "<group>"; };
+		5F6DC81A1649A83E004B713C /* BOModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Model/BOModel.h; sourceTree = "<group>"; };
+		5F6DC81B1649A83E004B713C /* BOModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Model/BOModel.m; sourceTree = "<group>"; };
 		5F6DC8261649B3BC004B713C /* mo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mo.png; path = ../mo.png; sourceTree = "<group>"; };
 		5F6DC8281649B3D2004B713C /* paddel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = paddel.png; path = ../paddel.png; sourceTree = "<group>"; };
 		5F9C55D1164C4C1D000E6F90 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play.png; path = ../play.png; sourceTree = "<group>"; };
@@ -161,6 +164,8 @@
 				5F6DC81D1649A8AA004B713C /* Model */,
 				5F6DC7E91649A5B5004B713C /* BOAppDelegate.h */,
 				5F6DC7EA1649A5B5004B713C /* BOAppDelegate.m */,
+				1A2B3C4D5E6F700100000002 /* BOSceneDelegate.h */,
+				1A2B3C4D5E6F700100000003 /* BOSceneDelegate.m */,
 				5F6DC7F21649A5B5004B713C /* MainStoryboard.storyboard */,
 				5F14F8F1164D9D7300055C85 /* BONewUserViewController.h */,
 				5F14F8F2164D9D7300055C85 /* BONewUserViewController.m */,
@@ -346,6 +351,7 @@
 			files = (
 				5F6DC7E71649A5B5004B713C /* main.m in Sources */,
 				5F6DC7EB1649A5B5004B713C /* BOAppDelegate.m in Sources */,
+				1A2B3C4D5E6F700100000001 /* BOSceneDelegate.m in Sources */,
 				5F6DC7F71649A5B5004B713C /* BOViewController.m in Sources */,
 				5F6DC8191649A720004B713C /* BOBlockView.m in Sources */,
 				5F6DC81C1649A83E004B713C /* BOModel.m in Sources */,

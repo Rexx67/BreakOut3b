@@ -30,7 +30,7 @@
     BOModel* gameModel;
     CADisplayLink* gameTimer;
     UIImageView* mo;
-    UIImageView* paddel;
+    UIView* paddel;
     int maxScore;
     int color;
     UIColor *realColor;

@@ -9,6 +9,12 @@
 #import "BOModel.h"
 
 @interface BOModel (){
+    // 2026-04-09:
+    // Paddle collision handling was adjusted during the iOS modernization work.
+    // Side hits now reverse horizontal velocity, the moving object is pushed back
+    // outside the paddle after a collision, and the paddle's right-side segment
+    // geometry was corrected. These changes prevent the moving object from
+    // becoming trapped inside the paddle while preserving the original rules.
     NSMutableArray* blocksToRemoveFromView;
    
 }
@@ -284,15 +290,23 @@
         if ([self flipY: _paddelRect]) {
             // Flip the y velocity component if we hit top or bottom
             moVelocity.y = -1 * moVelocity.y;
+            if (moVelocity.y < 0) {
+                _moSquare.origin.y = CGRectGetMinY(_paddelRect) - CGRectGetHeight(_moSquare);
+            } else {
+                _moSquare.origin.y = CGRectGetMaxY(_paddelRect);
+            }
+            
+            // Go see how the place where the Moving Object hits affect the velocity vector
+            [self changeDirection:_paddelRect];
+        } else {
+            // Flip the x velocity component if we hit the left or right edge
+            moVelocity.x = -1 * moVelocity.x;
+            if (moVelocity.x > 0) {
+                _moSquare.origin.x = CGRectGetMaxX(_paddelRect);
+            } else {
+                _moSquare.origin.x = CGRectGetMinX(_paddelRect) - CGRectGetWidth(_moSquare);
+            }
         }
-            // Before we introduced paddel segmentation this was a way to add some fun
-            // else {
-            // Flip the x velocity component if we hit eft or right
-            // moVelocity.y = -1 * moVelocity.x;
-            // }
-        
-        // Go see how the place where the Moving Object hits affect the velocity vector
-        [self changeDirection:_paddelRect];
     }
 }
 
@@ -332,8 +346,8 @@
                               (1 - 2 * PADDEL_EDGE) * size.width,
                               THICKNESS);
 
-    CGRect right = CGRectMake(origin.x,
-                              origin.y + (1 - PADDEL_EDGE) * size.width ,
+    CGRect right = CGRectMake(origin.x + (1 - PADDEL_EDGE) * size.width,
+                              origin.y,
                               PADDEL_EDGE * size.width,
                               THICKNESS);
     

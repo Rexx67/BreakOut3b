@@ -7,10 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BOSettingsTableViewController.h"
-
 @interface BOAppDelegate : UIResponder <UIApplicationDelegate>
-
-@property (strong, nonatomic) UIWindow *window;
 
 @end

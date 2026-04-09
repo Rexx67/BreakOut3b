@@ -8,12 +8,28 @@
 
 #import "BOViewController.h"
 
-@interface BOViewController () 
+@interface BOViewController ()
+
+// 2026-04-09:
+// The original 2012 controller assumed a full-screen 320x436 playfield and
+// relied on raw touch handling plus image-based paddle rendering. During the
+// UIScene migration and modern iOS cleanup, the game view was updated to:
+// 1. Render the legacy playfield inside a centered fixed-size board view.
+// 2. Use a visible UIView-based paddle instead of the old image asset.
+// 3. Move the paddle with a pan gesture recognizer instead of touchesMoved:.
+// 4. Disable the navigation controller's edge-swipe gesture while playing.
+// These changes preserve the original gameplay geometry while restoring stable
+// paddle rendering and interaction on current iOS versions.
+@property (nonatomic, strong) UIView *gameBoardView;
+@property (nonatomic, strong) UIPanGestureRecognizer *paddlePanGesture;
 
 - (void)presentResultAlertWithTitle:(NSString *)title
                             message:(NSString *)message
                          completion:(void (^)(void))completion;
 - (void)cleanupGameState;
+- (void)rebuildBoardViewIfNeeded;
+- (void)clearBoardSubviews;
+- (void)handlePaddlePan:(UIPanGestureRecognizer *)gestureRecognizer;
 
 @end
 
@@ -26,10 +42,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self rebuildBoardViewIfNeeded];
     [self initLevel:0];
     
 }
 -(void) initLevel:(int) lvl {
+    [self rebuildBoardViewIfNeeded];
     gameLevel = lvl;
     NSInteger currentPlayer = [[NSUserDefaults standardUserDefaults] integerForKey:@"currentPlayer"];
     //_ NSLog(@"currentPlayer %d", currentPlayer);
@@ -48,21 +66,27 @@
           [UIImage imageNamed:@"mo.png"]];
     
     [mo setFrame:gameModel.moSquare];
-    [self.view addSubview:mo];
+    [self.gameBoardView addSubview:mo];
     
     // Draw the Paddel
-    paddel = [[UIImageView alloc] initWithImage:
-              [UIImage imageNamed:@"paddel.png"]];
+    paddel = [[UIView alloc] initWithFrame:CGRectZero];
+    paddel.backgroundColor = [UIColor blackColor];
+    paddel.layer.cornerRadius = 4.0;
     
+    CGRect centeredPaddelRect = gameModel.paddelRect;
+    centeredPaddelRect.origin.x = floor((VIEW_WIDTH - CGRectGetWidth(centeredPaddelRect)) / 2.0);
+    gameModel.paddelRect = centeredPaddelRect;
     [paddel setFrame:gameModel.paddelRect];
-    [self.view addSubview:paddel];
+    [self.gameBoardView addSubview:paddel];
 
     
     // Iterate over the blocks in the model, drawing them
     for (BOBlockView* bobv in gameModel.blocks) {
         //	Add the block to the array
-        [self.view addSubview:bobv];
+        [self.gameBoardView addSubview:bobv];
     }
+    [self.gameBoardView bringSubviewToFront:paddel];
+    [self.gameBoardView bringSubviewToFront:mo];
     
     switch (color)
     
@@ -84,7 +108,7 @@
         break;
     }
 
-     [self.view setBackgroundColor:realColor];  // Set user specific background color
+     [self.gameBoardView setBackgroundColor:realColor];  // Set user specific background color
     
     
        
@@ -97,7 +121,7 @@
     
     // Add the display link to the current run loop
     [gameTimer addToRunLoop:[NSRunLoop currentRunLoop]
-                    forMode:NSDefaultRunLoopMode];
+                    forMode:NSRunLoopCommonModes];
     
     
 }
@@ -142,9 +166,7 @@
     [self presentResultAlertWithTitle:@"Level Over"
                               message:message
                            completion:^{
-                               for (UIView *view in self.view.subviews) {
-                                   [view removeFromSuperview];
-                               }
+                               [self clearBoardSubviews];
 
                                [self->gameModel resetModel:0 color:1];
                                [self initLevel:1];
@@ -161,9 +183,7 @@
     [self presentResultAlertWithTitle:@"Game Over"
                               message:message
                            completion:^{
-                               for (UIView *view in self.view.subviews) {
-                                   [view removeFromSuperview];
-                               }
+                               [self clearBoardSubviews];
 
                                [self->gameModel resetModel:0 color:1];
                            }];
@@ -202,17 +222,24 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [self rebuildBoardViewIfNeeded];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
 	 //_ NSLog(@"BOViewController viewWillDisappear");
     [super viewWillDisappear:animated];
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+    }
     [self cleanupGameState];
 }
 
@@ -226,25 +253,69 @@
     return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    [self rebuildBoardViewIfNeeded];
+}
+
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    // Iterate over all touches
-    for (UITouch* t in touches)
-    {
-        CGFloat delta = [t locationInView:self.view].x -
-        [t previousLocationInView:self.view].x;
-        
-        CGRect newPaddelRect = gameModel.paddelRect;
-        newPaddelRect.origin.x += delta;
-        gameModel.paddelRect = newPaddelRect;
-        
-    }
+    [super touchesMoved:touches withEvent:event];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)rebuildBoardViewIfNeeded
+{
+    CGRect availableBounds = self.view.bounds;
+    if (@available(iOS 11.0, *)) {
+        UIEdgeInsets safeInsets = self.view.safeAreaInsets;
+        availableBounds = UIEdgeInsetsInsetRect(self.view.bounds, safeInsets);
+    }
+
+    CGFloat boardX = CGRectGetMinX(availableBounds) + floor((CGRectGetWidth(availableBounds) - VIEW_WIDTH) / 2.0);
+    CGFloat boardY = CGRectGetMinY(availableBounds) + floor((CGRectGetHeight(availableBounds) - VIEW_HEIGHT) / 2.0);
+    CGRect boardFrame = CGRectMake(boardX, boardY, VIEW_WIDTH, VIEW_HEIGHT);
+
+    if (!self.gameBoardView) {
+        self.gameBoardView = [[UIView alloc] initWithFrame:boardFrame];
+        self.gameBoardView.clipsToBounds = YES;
+        self.paddlePanGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePaddlePan:)];
+        [self.gameBoardView addGestureRecognizer:self.paddlePanGesture];
+        [self.view addSubview:self.gameBoardView];
+    } else {
+        self.gameBoardView.frame = boardFrame;
+    }
+}
+
+- (void)clearBoardSubviews
+{
+    for (UIView *view in self.gameBoardView.subviews) {
+        [view removeFromSuperview];
+    }
+}
+
+- (void)handlePaddlePan:(UIPanGestureRecognizer *)gestureRecognizer
+{
+    CGPoint translation = [gestureRecognizer translationInView:self.gameBoardView];
+    if (translation.x == 0.0) {
+        return;
+    }
+
+    CGRect newPaddelRect = gameModel.paddelRect;
+    newPaddelRect.origin.x += translation.x;
+    CGFloat maxX = VIEW_WIDTH - CGRectGetWidth(newPaddelRect);
+    newPaddelRect.origin.x = MIN(MAX(newPaddelRect.origin.x, 0.0), maxX);
+
+    gameModel.paddelRect = newPaddelRect;
+    paddel.frame = newPaddelRect;
+
+    [gestureRecognizer setTranslation:CGPointZero inView:self.gameBoardView];
 }
 
 @end

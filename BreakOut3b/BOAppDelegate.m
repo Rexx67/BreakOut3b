@@ -35,18 +35,16 @@
     [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    // Override point for customization after application launch.
-    BOSettingsTableViewController *bostvc;
-    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
-    bostvc = (BOSettingsTableViewController *)navigationController.topViewController;
-    
-    
-    // Ge länkar till BOSettingsTableViewController
-    NSMutableArray *users = [[NSMutableArray alloc] init];
-    bostvc.users = users;
-    
-
     return YES;
+}
+
+- (UISceneConfiguration *)application:(UIApplication *)application configurationForConnectingSceneSession:(UISceneSession *)connectingSceneSession options:(UISceneConnectionOptions *)options API_AVAILABLE(ios(13.0))
+{
+    return [[UISceneConfiguration alloc] initWithName:@"Default Configuration" sessionRole:connectingSceneSession.role];
+}
+
+- (void)application:(UIApplication *)application didDiscardSceneSessions:(NSSet<UISceneSession *> *)sceneSessions API_AVAILABLE(ios(13.0))
+{
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
