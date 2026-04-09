@@ -66,7 +66,7 @@
         if ([textField.placeholder isEqualToString:@"Enter a digit between 1 and 3."]) {
             // Difficulty
             //_ NSLog(@"Difficulty");
-            self.theDifficulty = [NSNumber numberWithInt:[textField.text integerValue]];
+            self.theDifficulty = [NSNumber numberWithInteger:[textField.text integerValue]];
             
             self.backgroundColorTextField.returnKeyType = UIReturnKeyDone;
             [self.backgroundColorTextField becomeFirstResponder];
@@ -75,7 +75,7 @@
         else {
             // Background Color
             //_ NSLog(@"Background Color");
-            self.theBackgroundColor = [NSNumber numberWithInt:[textField.text integerValue]];
+            self.theBackgroundColor = [NSNumber numberWithInteger:[textField.text integerValue]];
             
             self.editing = NO;
             if (![textField.text length]) {

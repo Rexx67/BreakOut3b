@@ -45,8 +45,8 @@
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
     
-    int noOfUsers = [[NSUserDefaults standardUserDefaults] integerForKey:@"noOfUsers"];
-    int currentPlayer = [[NSUserDefaults standardUserDefaults] integerForKey:@"currentPlayer"];
+    NSInteger noOfUsers = [[NSUserDefaults standardUserDefaults] integerForKey:@"noOfUsers"];
+    NSInteger currentPlayer = [[NSUserDefaults standardUserDefaults] integerForKey:@"currentPlayer"];
 
     
     //_ NSLog(@"In BOSettingsTableViewController viewDidLoad (1) with noOfUsers=%d and currentPlayer=%d", noOfUsers, currentPlayer);
@@ -165,8 +165,8 @@
         [su removeObjectAtIndex:indexPath.row];
         self.users = su;
         
-        int noOfUsers = [[NSUserDefaults standardUserDefaults] integerForKey:@"noOfUsers"];
-        int currentPlayer = [[NSUserDefaults standardUserDefaults] integerForKey:@"currentPlayer"];
+        NSInteger noOfUsers = [[NSUserDefaults standardUserDefaults] integerForKey:@"noOfUsers"];
+        NSInteger currentPlayer = [[NSUserDefaults standardUserDefaults] integerForKey:@"currentPlayer"];
         NSArray *oldUsers = [[NSUserDefaults standardUserDefaults] objectForKey:@"users"];
         NSArray *oldDiffs = [[NSUserDefaults standardUserDefaults] objectForKey:@"diffs"];
         NSArray *oldScores = [[NSUserDefaults standardUserDefaults] objectForKey:@"scores"];
@@ -254,11 +254,11 @@
         NSArray *newScores = [[[NSUserDefaults standardUserDefaults] objectForKey:@"scores"] arrayByAddingObject:[NSNumber numberWithInt:0]];
         NSArray *newColors = [[[NSUserDefaults standardUserDefaults] objectForKey:@"colors"] arrayByAddingObject:bkg];
         
-        int noOfUsers = 1 + [[NSUserDefaults standardUserDefaults] integerForKey:@"noOfUsers"];
+        NSInteger noOfUsers = 1 + [[NSUserDefaults standardUserDefaults] integerForKey:@"noOfUsers"];
     
         NSDictionary *appSettings = [NSDictionary dictionaryWithObjectsAndKeys:
-                                       [NSNumber numberWithInt:noOfUsers-1], @"currentPlayer"
-                                     , [NSNumber numberWithInt:noOfUsers], @"noOfUsers"
+                                       [NSNumber numberWithInteger:noOfUsers - 1], @"currentPlayer"
+                                     , [NSNumber numberWithInteger:noOfUsers], @"noOfUsers"
                                      , newUsers , @"users"
                                      , newDiffs , @"diffs"
                                      , newScores , @"scores"
@@ -281,7 +281,7 @@
             [userArray addObject:aUser];
         }
         
-        self.users = [NSArray arrayWithArray:userArray];
+        self.users = [NSMutableArray arrayWithArray:userArray];
     }
     
     [self dismissViewControllerAnimated:YES completion:nil];

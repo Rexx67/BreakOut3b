@@ -37,7 +37,7 @@
     
     if (self) {
         //_ NSLog(@"aLevel %d", aLevel);
-        int currentPlayer = [[NSUserDefaults standardUserDefaults] integerForKey:@"currentPlayer"];
+        NSInteger currentPlayer = [[NSUserDefaults standardUserDefaults] integerForKey:@"currentPlayer"];
         //_ NSLog(@"currentPlayer %d", currentPlayer);
         NSArray *currentDiffs = [[NSUserDefaults standardUserDefaults] objectForKey:@"diffs"];
         NSArray *currentScores = [[NSUserDefaults standardUserDefaults] objectForKey:@"scores"];
@@ -166,19 +166,19 @@
     BOOL hitBounds = NO;
     if ([self hitLeft])
     {
-        moVelocity.x = abs(moVelocity.x);
+        moVelocity.x = fabs(moVelocity.x);
         hitBounds = YES;
     }
     
     if ([self hitRight])
     {
-        moVelocity.x = -1 * abs(moVelocity.x);
+        moVelocity.x = -1 * fabs(moVelocity.x);
         hitBounds = YES;
     }
     
     if ([self hitTop])
     {
-        moVelocity.y = abs(moVelocity.y);
+        moVelocity.y = fabs(moVelocity.y);
         hitBounds = YES;
     }
     
@@ -189,7 +189,7 @@
         // a count on how many lives we have left. If some lives are left
         // insert a new Moving Object by specifying its coordinates and velocity
         
-        moVelocity.y = -1*abs(moVelocity.y);
+        moVelocity.y = -1*fabs(moVelocity.y);
         hitBounds = YES;
     }
     return hitBounds;
@@ -340,21 +340,21 @@
     if (CGRectIntersectsRect(_moSquare,left)){
         // We hit the left part of the paddel
         // Add left momentum
-        moVelocity.x = moVelocity.x - ACCEL * abs(moVelocity.x) -MIN_CHANGE;
+        moVelocity.x = moVelocity.x - ACCEL * fabs(moVelocity.x) -MIN_CHANGE;
         //  NSLog(@"Added left momentum");
     }
     
     if (CGRectIntersectsRect(_moSquare,center)){
         // We hit the center part of the paddel
         // Add vertical momentum
-        moVelocity.y = moVelocity.y - (ACCEL/2.0) * abs(moVelocity.x) + MIN_CHANGE;
+        moVelocity.y = moVelocity.y - (ACCEL/2.0) * fabs(moVelocity.x) + MIN_CHANGE;
         // NSLog(@"Added vertical momentum");
     }
 
     if (CGRectIntersectsRect(_moSquare,right)) {
         // We hit the right part of the paddel
         // Add rigt momentum
-        moVelocity.x = moVelocity.x + ACCEL * abs(moVelocity.x) + MIN_CHANGE;
+        moVelocity.x = moVelocity.x + ACCEL * fabs(moVelocity.x) + MIN_CHANGE;
         // NSLog(@"Added right momentum");
     }
     
@@ -370,7 +370,7 @@
 
 - (void) resetModel:(int) lvl color:(int) col {
     // NSLog(@"ResetModel");
-    int currentPlayer = [[NSUserDefaults standardUserDefaults] integerForKey:@"currentPlayer"];
+    NSInteger currentPlayer = [[NSUserDefaults standardUserDefaults] integerForKey:@"currentPlayer"];
     
     NSArray *currentScores = [[NSUserDefaults standardUserDefaults] objectForKey:@"scores"];
     NSMutableArray *tempScores = [[NSMutableArray alloc] initWithArray:currentScores];
@@ -394,4 +394,3 @@
 }
 
 @end
-

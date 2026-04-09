@@ -16,10 +16,10 @@
     //_ NSlog(@"In BOAppDelegate didFinishLaunchingWithOptions:");
     
     // Create default arrays of players, scores and background colors selected by player
-    NSArray *defaultUsers = [NSArray arrayWithObjects:  nil];
-    NSArray *defaultDiffs = [NSArray arrayWithObjects:  nil];
-    NSArray *defaultScores = [NSArray arrayWithObjects:  nil];
-    NSArray *defaultBackgroundColors = [NSArray arrayWithObjects:  nil];
+    NSArray *defaultUsers = @[];
+    NSArray *defaultDiffs = @[];
+    NSArray *defaultScores = @[];
+    NSArray *defaultBackgroundColors = @[];
     
     // Set default currentPlayer to '-1'
     NSDictionary *appDefaults = [NSDictionary dictionaryWithObjectsAndKeys:

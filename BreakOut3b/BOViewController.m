@@ -10,6 +10,11 @@
 
 @interface BOViewController () 
 
+- (void)presentResultAlertWithTitle:(NSString *)title
+                            message:(NSString *)message
+                         completion:(void (^)(void))completion;
+- (void)cleanupGameState;
+
 @end
 
 
@@ -26,7 +31,7 @@
 }
 -(void) initLevel:(int) lvl {
     gameLevel = lvl;
-    int currentPlayer = [[NSUserDefaults standardUserDefaults] integerForKey:@"currentPlayer"];
+    NSInteger currentPlayer = [[NSUserDefaults standardUserDefaults] integerForKey:@"currentPlayer"];
     //_ NSLog(@"currentPlayer %d", currentPlayer);
     NSArray *currentScores = [[NSUserDefaults standardUserDefaults] objectForKey:@"scores"];
     NSArray *currentColors = [[NSUserDefaults standardUserDefaults] objectForKey:@"colors"];
@@ -134,19 +139,16 @@
     // Invalidate the timer
     [gameTimer invalidate];
     
-    // Show an alert with the results
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Level Over"
-                                                    message:message
-                                                   delegate:self
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles: nil];
-    [alert show];
-    for (UIView *view in self.view.subviews) {
-        [view removeFromSuperview];
-    }
-    //[NSThread sleepForTimeInterval:1.0];
-    [gameModel resetModel:0 color:1];
-    [self initLevel:1];
+    [self presentResultAlertWithTitle:@"Level Over"
+                              message:message
+                           completion:^{
+                               for (UIView *view in self.view.subviews) {
+                                   [view removeFromSuperview];
+                               }
+
+                               [self->gameModel resetModel:0 color:1];
+                               [self initLevel:1];
+                           }];
     
 }
 -(void) gameOver:(NSString *)message
@@ -156,31 +158,45 @@
     // Invalidate the timer
     [gameTimer invalidate];
     
-    // Show an alert with the results
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Game Over"
-                                                    message:message
-                                                   delegate:self
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles: nil];
-    [alert show];
-    for (UIView *view in self.view.subviews) {
-        [view removeFromSuperview];
-    }
-    [gameModel resetModel:0 color:1];
+    [self presentResultAlertWithTitle:@"Game Over"
+                              message:message
+                           completion:^{
+                               for (UIView *view in self.view.subviews) {
+                                   [view removeFromSuperview];
+                               }
+
+                               [self->gameModel resetModel:0 color:1];
+                           }];
 
 }
 
-- (void)viewDidUnload
+- (void)presentResultAlertWithTitle:(NSString *)title
+                            message:(NSString *)message
+                         completion:(void (^)(void))completion
 {
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-    for (UIView *view in self.view.subviews) {
-        [view removeFromSuperview];
-    }
-    //_ NSLog(@"BOViewController viewDidUmload");
-   [gameTimer invalidate];
-   [gameModel resetModel:0 color:1];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
+                                                                             message:message
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction *action) {
+                                                         if (completion) {
+                                                             completion();
+                                                         }
+                                                     }];
+    [alertController addAction:okAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)cleanupGameState
+{
+    [gameTimer invalidate];
+    [gameModel resetModel:0 color:1];
+}
+
+- (void)dealloc
+{
+    [self cleanupGameState];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -197,8 +213,7 @@
 {
 	 //_ NSLog(@"BOViewController viewWillDisappear");
     [super viewWillDisappear:animated];
-    [gameTimer invalidate];
-    [gameModel resetModel:0 color:1];
+    [self cleanupGameState];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -206,10 +221,9 @@
 	[super viewDidDisappear:animated];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    // Return YES for supported orientations
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+    return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
